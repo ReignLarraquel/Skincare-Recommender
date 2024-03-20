@@ -91,7 +91,7 @@ acne_no_radiobttn.place(relx=0.68, rely=0.28, anchor=ctk.CENTER)
 products = []
 brands = []#for combobox display
 
-with open("skincare.csv", "r") as file:
+with open("skincare.csv", "r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
     for row in reader:
         products.append({"Brand": row['Brand'], "Title": row['Title']})
