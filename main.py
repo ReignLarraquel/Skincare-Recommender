@@ -169,12 +169,12 @@ allergies_list = ["Benzyl alcohol", "Hydroxycitronellal", "Cinnamaldehyde", "Far
 
 """
 TO DO:  (insert csv containing the allergens)
-
-with open("_.csv", "r") as file:
+"""
+with open("allergens.csv", "r") as file:
     reader = csv.DictReader(file)
     for allergy in reader:
-        allergies_list.append(allergy)
-                                        """
+        allergies_list.append(allergy['Name'])
+
 
 allergies_list.sort()
 
