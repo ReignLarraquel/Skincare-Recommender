@@ -77,3 +77,33 @@ def recommendation(label, opt_skin_type, opt_products_list, opt_allergies_list, 
 
     return result_df
 
+def productdf_to_list(df): #converts df to list #Note: useful since output of the filter is a df and you probably want a list
+    if not df.empty:
+        return [df['Brand'].tolist()[0], df['Name'].tolist()[0], "www.google.com"]   
+    else:
+        return []
+
+def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne): #checks if exisitng products is good for skin type. Format: ['Brand', 'Name', 'Link']
+    moisturizer = pd.DataFrame()
+    cleanser = pd.DataFrame()
+    sunscreen = pd.DataFrame()
+    for product in opt_products_list:
+        product = df[df['Name'] == product]
+        product = product[~product['Ingredients'].apply(lambda x: any(allergen in x for allergen in opt_allergies_list))]
+        label = product['Label'].to_string(index=False)
+        match label:
+            case "Moisturizer":
+                if product[opt_skin_type].to_string(index=False) == '1':
+                    moisturizer = product
+            case "Cleanser":
+                if product[opt_skin_type].to_string(index=False) == '1':
+                    cleanser = product
+            case "sunscreen":
+                if product[opt_skin_type].to_string(index=False) == '1':
+                    sunscreen = product
+    
+    moisturizer = productdf_to_list(moisturizer)
+    cleanser = productdf_to_list(cleanser)
+    sunscreen = productdf_to_list(sunscreen)
+    
+    return moisturizer, cleanser, sunscreen
