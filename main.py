@@ -31,12 +31,12 @@ app.geometry('900x700')
 cover_frame = ctk.CTkFrame(app, width=350, height=700)
 cover_frame.grid(row=0, column=0, padx=0, pady=0)
 
-female_img = Image.open("cover.png")
-female_img = female_img.resize((350, 700))
-
-cover_photo = ImageTk.PhotoImage(female_img)
-cover_label = ctk.CTkLabel(cover_frame, image=cover_photo, text="")
+cov = ctk.CTkImage(light_image=Image.open("cover.png"),
+                                  size=(350, 700))
+cover_label = ctk.CTkLabel(cover_frame, image=cov, text="")
 cover_label.pack()
+
+
 
 #MAIN FRAME
 frame = ctk.CTkFrame(app, width=550, height=700, fg_color="#FFFFF9")
@@ -171,9 +171,17 @@ products_selected_label_var = ctk.StringVar(value="Products:\n∙ ")
 products_selected_label = ctk.CTkLabel(master=horizontal_scroll_frame, textvariable=products_selected_label_var, justify="left")
 products_selected_label.pack()
 
+#delete most recently added product
+def clear_products_list():
+    opt_products_list.pop()
+    update_products_label()
+
+clear_prod_button = ctk.CTkButton(master=frame, text="x", border_color="light blue", command=clear_products_list, width=25)
+clear_prod_button.place(relx=0.925, rely=0.53, anchor=ctk.CENTER)
+
 #ALLERGIES
 """TO DO: empty allergies_list once may csv na"""
-allergies_list = ["Benzyl alcohol", "Hydroxycitronellal", "Cinnamaldehyde", "Farnesol"]
+allergies_list = []
 
 """
 TO DO:  (insert csv containing the allergens)
@@ -220,6 +228,14 @@ allergies_selected_label_var = ctk.StringVar(value="Allergies:\n∙ ")
 allergies_selected_label = ctk.CTkLabel(master=allergies_horizontal_scroll_frame, textvariable=allergies_selected_label_var, justify="left")
 allergies_selected_label.pack()
 
+#delete most recently added product
+def clear_allergies_list():
+    opt_allergies_list.pop()
+    update_allergies_label()
+
+clear_allergies_button = ctk.CTkButton(master=frame, text="x", border_color="light blue", command=clear_allergies_list, width=25)
+clear_allergies_button.place(relx=0.925, rely=0.76, anchor=ctk.CENTER)
+
 ##########################################
 #SUBMIT
 def submit():
@@ -242,12 +258,15 @@ def submit():
     app.grid_rowconfigure(0, weight=1)
     app.grid_columnconfigure(0, weight=1)
 
+    app.geometry('700x400')
+
     fill_skincare_table()#########
 
 def go_back():
     result_frame.grid_forget()
     cover_frame.grid(row=0, column=0, padx=0, pady=0)
     frame.grid(row=0, column=1, padx=0, pady=0)
+    app.geometry('900x700')
     reset_form()
 
 def reset_form():
@@ -275,8 +294,8 @@ sunscreen = sunscreenRecom(opt_skin_type, opt_products_list, opt_allergies_list,
 #RESULTS
 def fill_skincare_table():
     #clear previous data
-    """for item in skincare_table.get_children():
-        skincare_table.delete(item)"""
+    for item in skincare_table.get_children():
+        skincare_table.delete(item)
 
     """TO DO: insert recommended products based on user input"""
     recommended_routine = [
@@ -322,8 +341,8 @@ skincare_table.tag_configure("avoid", background="#BF0013")
 
 skincare_table.pack(pady=20)
 
-#back_button = ctk.CTkButton(master=result_frame, text="Try Again", border_color="light blue", command=go_back)
-#back_button.place(relx=0.5, rely=0.6, anchor=ctk.CENTER)
+back_button = ctk.CTkButton(master=result_frame, text="x", border_color="light blue", command=go_back, width=25)
+back_button.place(relx=0.97, rely=0.1, anchor=ctk.CENTER)
 
 app.mainloop()
 
