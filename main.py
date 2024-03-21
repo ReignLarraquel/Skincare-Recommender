@@ -234,12 +234,15 @@ def submit():
     app.grid_rowconfigure(0, weight=1)
     app.grid_columnconfigure(0, weight=1)
 
+    app.geometry('700x400')
+
     fill_skincare_table()#########
 
 def go_back():
     result_frame.grid_forget()
     cover_frame.grid(row=0, column=0, padx=0, pady=0)
     frame.grid(row=0, column=1, padx=0, pady=0)
+    app.geometry('900x700')
     reset_form()
 
 def reset_form():
@@ -262,8 +265,8 @@ button.place(relx=0.5, rely=0.95, anchor=ctk.CENTER)
 #RESULTS
 def fill_skincare_table():
     #clear previous data
-    """for item in skincare_table.get_children():
-        skincare_table.delete(item)"""
+    for item in skincare_table.get_children():
+        skincare_table.delete(item)
 
     """TO DO: insert recommended products based on user input"""
     recommended_routine = [
@@ -309,8 +312,8 @@ skincare_table.tag_configure("avoid", background="#BF0013")
 
 skincare_table.pack(pady=20)
 
-#back_button = ctk.CTkButton(master=result_frame, text="Try Again", border_color="light blue", command=go_back)
-#back_button.place(relx=0.5, rely=0.6, anchor=ctk.CENTER)
+back_button = ctk.CTkButton(master=result_frame, text="x", border_color="light blue", command=go_back, width=25)
+back_button.place(relx=0.97, rely=0.1, anchor=ctk.CENTER)
 
 app.mainloop()
 
