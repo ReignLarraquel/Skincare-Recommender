@@ -1,11 +1,11 @@
 # %%
 import pandas as pd
+import processdata
 
 def convert_to_list(string):
     return string.split(', ')
 
-df = pd.read_csv('cosmetics.csv')
-df['Ingredients'] = df['Ingredients'].apply(convert_to_list)
+df = processdata.process_df()
 
 # %%
 def skinType(df, x):
@@ -31,13 +31,14 @@ def allergenFilter (df, opt_allergies_list):
     row = 0
     list = []
     test = df
-    
+    print(df.Ingredients[9])
     for row in range (len(df)):
         list = df.Ingredients[row]
         for i in list:
-            if i == opt_allergies_list:
-                test = test.drop(row)
-                break
+            for allergy in opt_allergies_list:
+                if i == allergy:
+                    test = test.drop(row)
+                    break
     return test
 
 # %%
@@ -46,18 +47,18 @@ def labelFilter(df, label):
     return filtered_df
 
 # %%
-def getBrands(df, opt_products_list):
-   list = []
-   brands = df
-   row = 0
+# def getBrands(df, opt_products_list):
+#    list = []
+#    brands = df
+#    row = 0
 
-   for row in range (len(df)):
-      list = df.Brand[row]
-      for i in list:
-         if i != opt_products_list:
-            brands = brands.drop(row)
-            break
-   return brands
+#    for row in range (len(df)):
+#       list = df.Brand[row]
+#       for i in list:
+#          if i != opt_products_list:
+#             brands = brands.drop(row)
+#             break
+#    return brands
 
 # %%
 def hasAcne(df, opt_acne):
@@ -70,18 +71,28 @@ def hasAcne(df, opt_acne):
 def recommendation(label, opt_skin_type, opt_products_list, opt_allergies_list, opt_acne):
     data = df
     sT = skinType(data, opt_skin_type)  # Assume returns DataFrame with a common unique identifier
-    lbl = labelFilter(data, label)  # Same assumption
-    brands = getBrands(data, opt_products_list)  # Same assumption
-    allergens = allergenFilter(data, opt_allergies_list) 
+    lbl = labelFilter(sT, label)  # Same assumption
+    # brands = getBrands(lbl, opt_products_list)  # Same assumption
+    last_df = allergenFilter(lbl, opt_allergies_list) 
     
 
-    merge1 = pd.merge(sT, lbl, on='common_unique_identifier', how='inner')
-    merge2 = pd.merge(merge1, brands, on='common_unique_identifier', how='inner')
-    result_df = pd.merge(merge2, allergens, on='common_unique_identifier', how='inner')
+    # merge1 = pd.merge(sT, lbl, on='common_unique_identifier', how='inner')
+    # merge2 = pd.merge(merge1, brands, on='common_unique_identifier', how='inner')
+    # result_df = pd.merge(merge2, allergens, on='common_unique_identifier', how='inner')
 
     if label == "Cleanser":
-        acne = hasAcne(data, opt_acne)  # Assume returns DataFrame with the same common unique identifier
-        result_df = pd.merge(result_df, acne, on='common_unique_identifier', how='inner')
+         last_df = hasAcne(last_df, opt_acne)  # Assume returns DataFrame with the same common unique identifier
 
-    return result_df
+    return last_df
+
+# Specify your CSV file path
+# csv_file_path = 'path/to/your/file.csv'
+# # Specify your Excel file path
+# excel_file_path = 'path/to/your/newfile.xlsx'
+
+# Read the CSV file
+
+
+# Save the DataFrame to an Excel file
+#df.to_excel(excel_file_path, index=False, engine='openpyxl')
 

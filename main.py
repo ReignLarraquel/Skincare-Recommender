@@ -288,8 +288,7 @@ button.place(relx=0.5, rely=0.95, anchor=ctk.CENTER)
 
 #RECOMMENDATIONS
 moisturizer = moisturizerRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
-cleanser = cleanserRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
-sunscreen = sunscreenRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
+
 
 #RESULTS
 def fill_skincare_table():
@@ -300,7 +299,7 @@ def fill_skincare_table():
     """TO DO: insert recommended products based on user input"""
     recommended_routine = [
         {"Product": "RecoCleanser", "Link": "https://google.com"},
-        {"Product": "RecoMoisturizer", "Link": "https://google.com"},
+        {"Product": moisturizer, "Link": "https://google.com"},
         {"Product": "RecoSunscreen", "Link": "https://google.com"}
     ]
     """TO DO: insert products to avoid based on user input"""

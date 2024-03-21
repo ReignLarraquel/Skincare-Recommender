@@ -7,8 +7,11 @@ from filterdata import recommendation
 # %%
 def moisturizerRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne):
    mRecom = recommendation("Moisturizer", opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
+   print(mRecom)
+   mRecom.sort_values(by=['Rank'])
+   
 
-   return mRecom
+   return mRecom[0]['Name']
 
 # %%
 def cleanserRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne):
@@ -28,3 +31,10 @@ def sunscreenRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acn
 #    moisturizer = moisturizerRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
 #    first_item_name = str(moisturizer['Name'].iloc[0])
 #    return first_item_name
+
+name_List = ["Brand 1", "Brand 2"]
+allergy_List = ["Latex"]
+
+name = moisturizerRecom("Combination", name_List, allergy_List, "No")
+
+print(name)
