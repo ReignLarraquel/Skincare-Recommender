@@ -163,6 +163,13 @@ products_selected_label_var = ctk.StringVar(value="Products:\n∙ ")
 products_selected_label = ctk.CTkLabel(master=horizontal_scroll_frame, textvariable=products_selected_label_var, justify="left")
 products_selected_label.pack()
 
+def clear_products_list():
+    opt_products_list.clear()
+    update_products_label()
+
+clear_prod_button = ctk.CTkButton(master=frame, text="x", border_color="light blue", command=clear_products_list, width=25)
+clear_prod_button.place(relx=0.925, rely=0.53, anchor=ctk.CENTER)
+
 #ALLERGIES
 """TO DO: empty allergies_list once may csv na"""
 allergies_list = ["Benzyl alcohol", "Hydroxycitronellal", "Cinnamaldehyde", "Farnesol"]
@@ -211,6 +218,13 @@ allergies_vertical_scroll_frame._scrollbar.configure(height=0)###
 allergies_selected_label_var = ctk.StringVar(value="Allergies:\n∙ ")
 allergies_selected_label = ctk.CTkLabel(master=allergies_horizontal_scroll_frame, textvariable=allergies_selected_label_var, justify="left")
 allergies_selected_label.pack()
+
+def clear_allergies_list():
+    opt_allergies_list.clear()
+    update_allergies_label()
+
+clear_allergies_button = ctk.CTkButton(master=frame, text="x", border_color="light blue", command=clear_allergies_list, width=25)
+clear_allergies_button.place(relx=0.925, rely=0.76, anchor=ctk.CENTER)
 
 ##########################################
 #SUBMIT
