@@ -13,10 +13,18 @@ import csv
 import tkinter as tk
 from tkinter import ttk
 
+import filterdata
+import recommendation
+
+from filterdata import recommendation
+from recommendation import moisturizerRecom
+from recommendation import cleanserRecom
+from recommendation import sunscreenRecom
+
 ctk.set_appearance_mode("light")
 
 app = ctk.CTk()
-app.title("App")
+app.title("Skincare Recommender")
 app.geometry('900x700')
 
 #COVER FRAME
@@ -258,6 +266,11 @@ def reset_form():
 
 button = ctk.CTkButton(master=frame, text="Submit", border_color="light blue", command=submit)
 button.place(relx=0.5, rely=0.95, anchor=ctk.CENTER)
+
+#RECOMMENDATIONS
+moisturizer = moisturizerRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
+cleanser = cleanserRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
+sunscreen = sunscreenRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
 
 #RESULTS
 def fill_skincare_table():
