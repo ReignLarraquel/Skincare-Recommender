@@ -29,8 +29,8 @@ def skinType(df, x):
 # %%
 def allergenFilter (df, opt_allergies_list):
     for allergen in opt_allergies_list:
-        test = test[~test['Ingredients'].apply(lambda x: allergen in x)]
-    return test
+        df = df[~df['Ingredients'].apply(lambda x: allergen in x)]
+    return df
 
 # %%
 def labelFilter(df, label):
@@ -61,9 +61,9 @@ def hasAcne(df, opt_acne):
 
 def recommendation(label, opt_skin_type, opt_products_list, opt_allergies_list, opt_acne):
     data = df
-    sT = skinType(data, opt_skin_type)  # Assume returns DataFrame with a common unique identifier
-    lbl = labelFilter(data, label)  # Same assumption
-    brands = getBrands(data, opt_products_list)  # Same assumption
+    #sT = skinType(data, opt_skin_type)  # Assume returns DataFrame with a common unique identifier
+    #lbl = labelFilter(data, label)  # Same assumption
+    #brands = getBrands(data, opt_products_list)  # Same assumption
     allergens = allergenFilter(data, opt_allergies_list) 
     
 
