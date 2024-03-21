@@ -163,8 +163,9 @@ products_selected_label_var = ctk.StringVar(value="Products:\n∙ ")
 products_selected_label = ctk.CTkLabel(master=horizontal_scroll_frame, textvariable=products_selected_label_var, justify="left")
 products_selected_label.pack()
 
+#delete most recently added product
 def clear_products_list():
-    opt_products_list.clear()
+    opt_products_list.pop()
     update_products_label()
 
 clear_prod_button = ctk.CTkButton(master=frame, text="x", border_color="light blue", command=clear_products_list, width=25)
@@ -219,8 +220,9 @@ allergies_selected_label_var = ctk.StringVar(value="Allergies:\n∙ ")
 allergies_selected_label = ctk.CTkLabel(master=allergies_horizontal_scroll_frame, textvariable=allergies_selected_label_var, justify="left")
 allergies_selected_label.pack()
 
+#delete most recently added product
 def clear_allergies_list():
-    opt_allergies_list.clear()
+    opt_allergies_list.pop()
     update_allergies_label()
 
 clear_allergies_button = ctk.CTkButton(master=frame, text="x", border_color="light blue", command=clear_allergies_list, width=25)
