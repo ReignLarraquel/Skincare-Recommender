@@ -23,12 +23,12 @@ app.geometry('900x700')
 cover_frame = ctk.CTkFrame(app, width=350, height=700)
 cover_frame.grid(row=0, column=0, padx=0, pady=0)
 
-female_img = Image.open("cover.png")
-female_img = female_img.resize((350, 700))
-
-cover_photo = ImageTk.PhotoImage(female_img)
-cover_label = ctk.CTkLabel(cover_frame, image=cover_photo, text="")
+cov = ctk.CTkImage(light_image=Image.open("cover.png"),
+                                  size=(350, 700))
+cover_label = ctk.CTkLabel(cover_frame, image=cov, text="")
 cover_label.pack()
+
+
 
 #MAIN FRAME
 frame = ctk.CTkFrame(app, width=550, height=700, fg_color="#FFFFF9")
@@ -173,7 +173,7 @@ clear_prod_button.place(relx=0.925, rely=0.53, anchor=ctk.CENTER)
 
 #ALLERGIES
 """TO DO: empty allergies_list once may csv na"""
-allergies_list = ["Benzyl alcohol", "Hydroxycitronellal", "Cinnamaldehyde", "Farnesol"]
+allergies_list = []
 
 """
 TO DO:  (insert csv containing the allergens)
