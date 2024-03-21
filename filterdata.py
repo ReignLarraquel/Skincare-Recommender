@@ -28,16 +28,8 @@ def skinType(df, x):
 
 # %%
 def allergenFilter (df, opt_allergies_list):
-    row = 0
-    list = []
-    test = df
-    
-    for row in range (len(df)):
-        list = df.Ingredients[row]
-        for i in list:
-            if i == opt_allergies_list:
-                test = test.drop(row)
-                break
+    for allergen in opt_allergies_list:
+        test = test[~test['Ingredients'].apply(lambda x: allergen in x)]
     return test
 
 # %%
