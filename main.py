@@ -99,10 +99,10 @@ acne_no_radiobttn.place(relx=0.68, rely=0.28, anchor=ctk.CENTER)
 products = []
 brands = []#for combobox display
 
-with open("skincare.csv", "r", encoding="utf-8") as file:
+with open("cosmetics.csv", "r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
     for row in reader:
-        products.append({"Brand": row['Brand'], "Title": row['Title']})
+        products.append({"Brand": row['Brand'], "Name": row['Name']})
         if row['Brand'] not in brands:
             brands.append(row['Brand'])
 
@@ -129,7 +129,7 @@ def update_products_label():
 def filter_products():
     selected_brand = brand_combobox.get()
     if selected_brand:
-        filtered_products = [f"{product['Title']}" for product in products if product["Brand"] == selected_brand]
+        filtered_products = [f"{product['Name']}" for product in products if product["Brand"] == selected_brand]
         if filtered_products:
             filtered_products.sort()
             product_label.place(relx=0.19, rely=0.43, anchor=ctk.CENTER)
@@ -287,9 +287,9 @@ button = ctk.CTkButton(master=frame, text="Submit", border_color="light blue", c
 button.place(relx=0.5, rely=0.95, anchor=ctk.CENTER)
 
 #RECOMMENDATIONS
-moisturizer = moisturizerRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
-cleanser = cleanserRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
-sunscreen = sunscreenRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
+#moisturizer = moisturizerRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
+#cleanser = cleanserRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
+#sunscreen = sunscreenRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
 
 #RESULTS
 def fill_skincare_table():
