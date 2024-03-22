@@ -14,7 +14,6 @@ import tkinter as tk
 from tkinter import ttk
 
 import filterdata
-import recommendation
 
 from filterdata import recommendation
 from filterdata import checkExisting
@@ -286,20 +285,16 @@ def reset_form():
 button = ctk.CTkButton(master=frame, text="Submit", border_color="light blue", command=submit)
 button.place(relx=0.5, rely=0.95, anchor=ctk.CENTER)
 
-#RECOMMENDATIONS
-#moisturizer = moisturizerRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
-#cleanser = cleanserRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
-#sunscreen = sunscreenRecom(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
-
 #RESULTS
 def fill_skincare_table():
     #clear previous data
     for item in skincare_table.get_children():
         skincare_table.delete(item)
 
-    #recommendations
+    #RECOMMENDATIONS
     moisturizer, cleanser, sunscreen = None, None, None
-    
+    moisturizer, cleanser, sunscreen = checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
+
     if not cleanser:
         cleanser = recommendation("Cleanser", opt_skin_type, opt_allergies_list, opt_acne)
 
@@ -308,17 +303,13 @@ def fill_skincare_table():
 
     if not sunscreen:
         sunscreen = recommendation("Sun protect", opt_skin_type, opt_allergies_list, opt_acne)
+        
 
-    tester = "test"
-
-    """TO DO: insert recommended products based on user input"""
     recommended_routine = [
     {"Brand": moisturizer["Brand"], "Product": moisturizer["Product"], "Link": moisturizer["Link"]},
     {"Brand": cleanser["Brand"], "Product": cleanser["Product"], "Link": cleanser["Link"]},
     {"Brand": sunscreen["Brand"], "Product": sunscreen["Product"], "Link": sunscreen["Link"]}
     ]
-    """TO DO: insert products to avoid based on user input"""
-    #based on allergen
     
     for prod in recommended_routine:
         brand = prod["Brand"]

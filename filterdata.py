@@ -1,4 +1,3 @@
-# %%
 import pandas as pd
 
 def convert_to_list(string):
@@ -7,7 +6,6 @@ def convert_to_list(string):
 df = pd.read_csv('cosmetics.csv')
 df['Ingredients'] = df['Ingredients'].apply(convert_to_list)
 
-# %%
 def skinType(df, x):
 
     test_df = df
@@ -26,18 +24,15 @@ def skinType(df, x):
             
     return test_df
 
-# %%
 def allergenFilter (df, opt_allergies_list):
     for allergen in opt_allergies_list:
         df = df[~df['Ingredients'].apply(lambda x: allergen in x)]
     return df
 
-# %%
 def labelFilter(df, label):
     filtered_df = df[df['Label'] == label]
     return filtered_df
 
-# %%
 def getBrands(df, opt_products_list):
    list = []
    brands = df
@@ -51,13 +46,10 @@ def getBrands(df, opt_products_list):
             break
    return brands
 
-# %%
 def hasAcne(df, opt_acne):
     if opt_acne == "Yes":
         filtered_df = df[df['Ingredients'].apply(lambda x: 'Salicylic Acid' in x)]
     return filtered_df
-
-# %%
 
 def productdf_to_list(df): #converts df to list #Note: useful since output of the filter is a df and you probably want a list
     if not df.empty:
@@ -100,7 +92,3 @@ def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne
     sunscreen = productdf_to_list(sunscreen)
     
     return moisturizer, cleanser, sunscreen
-
-# allergen_List = ["Gold"]
-
-# recommendation("Moisturizer", "Combination", allergen_List, "Yes")
