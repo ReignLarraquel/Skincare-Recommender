@@ -79,7 +79,7 @@ age_slider.place(relx=0.33, rely=0.19, anchor=ctk.CENTER)
 skin_type_label = ctk.CTkLabel(master=frame, text="Choose skin type:", font=("Arial", 13))
 skin_type_label.place(relx=0.68, rely=0.15, anchor=ctk.CENTER)
 
-skin_type_combobox = ctk.CTkComboBox(master=frame, values=["Combination", "Dry", "Normal", "Oily"], variable=opt_skin_type, width=150)
+skin_type_combobox = ctk.CTkComboBox(master=frame, values=["Combination", "Dry", "Normal", "Oily", "Sensitive"], variable=opt_skin_type, width=150)
 skin_type_combobox.place(relx=0.72, rely=0.19, anchor=ctk.CENTER)
 
 #ACNE
@@ -293,16 +293,17 @@ def fill_skincare_table():
 
     #RECOMMENDATIONS
     moisturizer, cleanser, sunscreen = None, None, None
-    moisturizer, cleanser, sunscreen = checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne)
 
+    moisturizer, cleanser, sunscreen = checkExisting(str(opt_skin_type.get()), opt_products_list, opt_allergies_list, str(opt_acne.get()))
+    
     if not cleanser:
-        cleanser = recommendation("Cleanser", opt_skin_type, opt_allergies_list, opt_acne)
+        cleanser = recommendation("Cleanser", opt_skin_type, opt_allergies_list, str(opt_acne.get()))
 
     if not moisturizer:
-        moisturizer = recommendation("Moisturizer", opt_skin_type, opt_allergies_list, opt_acne)
+        moisturizer = recommendation("Moisturizer", opt_skin_type, opt_allergies_list, str(opt_acne.get()))
 
     if not sunscreen:
-        sunscreen = recommendation("Sun protect", opt_skin_type, opt_allergies_list, opt_acne)
+        sunscreen = recommendation("Sun protect", opt_skin_type, opt_allergies_list, str(opt_acne.get()))
         
 
     recommended_routine = [
