@@ -1,10 +1,11 @@
 import pandas as pd
+import processdata
 
 def convert_to_list(string):
     return string.split(', ')
 
-df = pd.read_csv('cosmetics.csv')
-df['Ingredients'] = df['Ingredients'].apply(convert_to_list)
+df = processdata.process_df()
+#df['Ingredients'] = df['Ingredients'].apply(convert_to_list)
 
 def skinType(df, x):
 
@@ -72,8 +73,6 @@ def recommendation(label, opt_skin_type, opt_allergies_list, opt_acne):
     return allergens
 
 def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne): #checks if exisitng products is good for skin type. Format: ['Brand', 'Name', 'Link']
-    print("Here ")
-    print(opt_skin_type)
     moisturizer = pd.DataFrame()
     cleanser = pd.DataFrame()
     sunscreen = pd.DataFrame()
@@ -83,9 +82,11 @@ def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne
         label = product['Label'].to_string(index=False)
         match label:
             case "Moisturizer":
+                product = hasAcne(product, opt_acne)
                 if product[opt_skin_type].to_string(index=False) == '1':
                     moisturizer = product
             case "Cleanser":
+                product = hasAcne(product, opt_acne)
                 if product[opt_skin_type].to_string(index=False) == '1':
                     cleanser = product
             case "Sun protect":
@@ -97,10 +98,3 @@ def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne
     sunscreen = productdf_to_list(sunscreen)
     
     return moisturizer, cleanser, sunscreen
-
-this_List = []
-prod = ["Eau Ginseng"]
-
-test = checkExisting("Normal", prod, this_List, "Yes")
-
-print(test)

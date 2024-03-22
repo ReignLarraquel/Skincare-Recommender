@@ -303,7 +303,7 @@ def fill_skincare_table():
         moisturizer = recommendation("Moisturizer", opt_skin_type, opt_allergies_list, str(opt_acne.get()))
 
     if not sunscreen:
-        sunscreen = recommendation("Sun protect", opt_skin_type, opt_allergies_list, str(opt_acne.get()))
+        sunscreen = recommendation("Sun protect", opt_skin_type, opt_allergies_list, "No")
         
 
     recommended_routine = [
@@ -317,7 +317,7 @@ def fill_skincare_table():
         product_name = prod["Product"]
         link = prod["Link"]
         if product_name in opt_products_list:
-            skincare_table.insert("", tk.END, values=[brand, product_name, link], tags=("highlight",))#highlight products that users already use?
+            skincare_table.insert("", tk.END, values=[brand, product_name, link], tags=("existing",))#highlight products that users already use?
         else:
             skincare_table.insert("", tk.END, values=[brand, product_name, link])
 
@@ -339,6 +339,7 @@ style.configure("Treeview", font=("Arial", 12), background="#FFFFF9", fieldbackg
 
 skincare_table.tag_configure("separator", background="light gray")
 skincare_table.tag_configure("avoid", background="#BF0013")
+skincare_table.tag_configure("existing", background="#f4e470")
 
 skincare_table.pack(pady=10)
 
