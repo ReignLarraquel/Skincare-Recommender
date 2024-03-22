@@ -258,7 +258,7 @@ def submit():
     app.grid_rowconfigure(0, weight=1)
     app.grid_columnconfigure(0, weight=1)
 
-    app.geometry('700x400')
+    app.geometry('1050x350')
 
     fill_skincare_table()#########
 
@@ -299,37 +299,41 @@ def fill_skincare_table():
 
     """TO DO: insert recommended products based on user input"""
     recommended_routine = [
-        {"Product": "RecoCleanser", "Link": "https://google.com"},
-        {"Product": "RecoMoisturizer", "Link": "https://google.com"},
-        {"Product": "RecoSunscreen", "Link": "https://google.com"}
+        {"Brand": "Brand1", "Product": "RecoCleanser", "Link": "https://google.com"},
+        {"Brand": "Brand2", "Product": "RecoMoisturizer", "Link": "https://google.com"},
+        {"Brand": "Brand3", "Product": "RecoSunscreen", "Link": "https://google.com"}
     ]
     """TO DO: insert products to avoid based on user input"""
     #based on allergen
     products_to_avoid = [
-        {"Product": "AvoidProduct1", "Link": "https://google.com"},
-        {"Product": "AvoidProduct2", "Link": "https://google.com"}
+        {"Brand": "Brand1", "Product": "AvoidProduct1", "Link": "https://google.com"},
+        {"Brand": "Brand2", "Product": "AvoidProduct2", "Link": "https://google.com"}
     ]
     for prod in recommended_routine:
+        brand = prod["Brand"]
         product_name = prod["Product"]
         link = prod["Link"]
         if product_name in opt_products_list:
-            skincare_table.insert("", tk.END, values=[product_name, link], tags=("highlight",))#highlight products that users already use?
+            skincare_table.insert("", tk.END, values=[brand, product_name, link], tags=("highlight",))#highlight products that users already use?
         else:
-            skincare_table.insert("", tk.END, values=[product_name, link])
+            skincare_table.insert("", tk.END, values=[brand, product_name, link])
 
     skincare_table.insert("", tk.END, values=["", ""], tags=("separator",))
     for prod in products_to_avoid:
+        brand = prod["Brand"]
         product_name = prod["Product"]
         link = prod["Link"]
-        skincare_table.insert("", tk.END, values=[product_name, link], tags=("avoid",))
+        skincare_table.insert("", tk.END, values=[brand, product_name, link], tags=("avoid",))
 
 
 result_frame = ctk.CTkFrame(app, width=900, height=700, fg_color="#FFFFF9")
 
-skincare_table = ttk.Treeview(result_frame, columns=("Product", "Link"), show="headings", height=10)
+skincare_table = ttk.Treeview(result_frame, columns=("Brand", "Product", "Link"), show="headings", height=10)
+skincare_table.heading("Brand", text="Brand")
 skincare_table.heading("Product", text="Product")
 skincare_table.heading("Link", text="Link")
-skincare_table.column("Product", width=200, anchor="center")
+skincare_table.column("Brand", width=100, anchor="center")
+skincare_table.column("Product", width=500, anchor="center")
 skincare_table.column("Link", width=400, anchor="center")
 
 style = ttk.Style()
@@ -339,7 +343,7 @@ style.configure("Treeview", font=("Arial", 12), background="#FFFFF9", fieldbackg
 skincare_table.tag_configure("separator", background="light gray")
 skincare_table.tag_configure("avoid", background="#BF0013")
 
-skincare_table.pack(pady=20)
+skincare_table.pack(pady=10)
 
 back_button = ctk.CTkButton(master=result_frame, text="x", border_color="light blue", command=go_back, width=25)
 back_button.place(relx=0.97, rely=0.1, anchor=ctk.CENTER)
