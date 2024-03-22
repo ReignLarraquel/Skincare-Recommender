@@ -59,29 +59,22 @@ def hasAcne(df, opt_acne):
 
 # %%
 
-def recommendation(label, opt_skin_type, opt_products_list, opt_allergies_list, opt_acne):
-    data = df
-    #sT = skinType(data, opt_skin_type)  # Assume returns DataFrame with a common unique identifier
-    #lbl = labelFilter(data, label)  # Same assumption
-    #brands = getBrands(data, opt_products_list)  # Same assumption
-    allergens = allergenFilter(data, opt_allergies_list) 
-    
-
-    merge1 = pd.merge(sT, lbl, on='common_unique_identifier', how='inner')
-    merge2 = pd.merge(merge1, brands, on='common_unique_identifier', how='inner')
-    result_df = pd.merge(merge2, allergens, on='common_unique_identifier', how='inner')
-
-    if label == "Cleanser":
-        acne = hasAcne(data, opt_acne)  # Assume returns DataFrame with the same common unique identifier
-        result_df = pd.merge(result_df, acne, on='common_unique_identifier', how='inner')
-
-    return result_df
-
 def productdf_to_list(df): #converts df to list #Note: useful since output of the filter is a df and you probably want a list
     if not df.empty:
         return [df['Brand'].tolist()[0], df['Name'].tolist()[0], "www.google.com"]   
     else:
         return []
+
+def recommendation(label, opt_skin_type, opt_allergies_list, opt_acne):
+    data = df
+    sT = skinType(data, opt_skin_type)  # Assume returns DataFrame with a common unique identifier
+    lbl = labelFilter(sT, label)  # Same assumption
+    allergens = allergenFilter(lbl, opt_allergies_list) 
+
+    allergens = allergens.sort_values(by="Rank",ascending=False)
+    allergens = productdf_to_list(allergens)
+
+    print(allergens)
 
 def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne): #checks if exisitng products is good for skin type. Format: ['Brand', 'Name', 'Link']
     moisturizer = pd.DataFrame()
@@ -107,3 +100,7 @@ def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne
     sunscreen = productdf_to_list(sunscreen)
     
     return moisturizer, cleanser, sunscreen
+
+# allergen_List = ["Gold"]
+
+# recommendation("Moisturizer", "Combination", allergen_List, "Yes")

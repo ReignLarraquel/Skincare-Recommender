@@ -250,6 +250,8 @@ def submit():
           + "Acne: " + acne + "\n" 
           + "Products: " + products + "\n" 
           + "Allergies: " + allergies + "\n")
+    
+    
 
     cover_frame.grid_forget()
     frame.grid_forget()
