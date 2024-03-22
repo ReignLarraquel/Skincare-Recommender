@@ -53,34 +53,18 @@ sub_title_label.place(relx=0.5, rely=0.09, anchor=ctk.CENTER)
 
 #####################################################################################
 # variables (user inputs)
-opt_age = ctk.IntVar(value=0)
 opt_skin_type = ctk.StringVar(value="Normal")
 opt_acne = ctk.StringVar(value="No")
 opt_products_list = [] 
 opt_allergies_list = [] 
 #####################################################################################
 
-#AGE
-def age_slider_event(value):
-    age_input.set(f"{int(age_slider.get())}")
-
-age_label = ctk.CTkLabel(master=frame, text="Select your age:", font=("Arial", 13))
-age_label.place(relx=0.235, rely=0.15, anchor=ctk.CENTER)
-
-age_input = ctk.StringVar(value="0")
-
-age_slider_label = ctk.CTkLabel(master=frame, textvariable=age_input, width=5, height=25, text_color="black")
-age_slider_label.place(relx=0.37, rely=0.15, anchor=ctk.CENTER)
-
-age_slider = ctk.CTkSlider(master=frame, from_=0, to=100, command=age_slider_event, variable=opt_age)
-age_slider.place(relx=0.33, rely=0.19, anchor=ctk.CENTER)
-
 #SKIN TYPE
 skin_type_label = ctk.CTkLabel(master=frame, text="Choose skin type:", font=("Arial", 13))
-skin_type_label.place(relx=0.68, rely=0.15, anchor=ctk.CENTER)
+skin_type_label.place(relx=0.235, rely=0.15, anchor=ctk.CENTER)
 
 skin_type_combobox = ctk.CTkComboBox(master=frame, values=["Combination", "Dry", "Normal", "Oily", "Sensitive"], variable=opt_skin_type, width=150)
-skin_type_combobox.place(relx=0.72, rely=0.19, anchor=ctk.CENTER)
+skin_type_combobox.place(relx=0.30, rely=0.20, anchor=ctk.CENTER)
 
 #ACNE
 acne_label = ctk.CTkLabel(master=frame, text="Do you have acne?", font=("Arial", 13))
@@ -236,14 +220,12 @@ clear_allergies_button.place(relx=0.925, rely=0.76, anchor=ctk.CENTER)
 ##########################################
 #SUBMIT
 def submit():
-    age = str(opt_age.get())
     skin_type = str(opt_skin_type.get())
     acne = str(opt_acne.get())
     products = ", ".join(opt_products_list)
     allergies = ", ".join(opt_allergies_list)
 
-    print("Age: " + age + "\n" 
-          + "Skin type: " + skin_type + "\n" 
+    print("Skin type: " + skin_type + "\n" 
           + "Acne: " + acne + "\n" 
           + "Products: " + products + "\n" 
           + "Allergies: " + allergies + "\n")
@@ -269,13 +251,11 @@ def go_back():
     reset_form()
 
 def reset_form():
-    opt_age.set(0)
     opt_skin_type.set("Normal")
     opt_acne.set("No")
     brand_combobox.set(brands[0])
     allergies_combobox.set(allergies_list[0])
 
-    age_input.set(0)
     opt_products_list.clear()
     opt_allergies_list.clear()
 
