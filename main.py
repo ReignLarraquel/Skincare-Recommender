@@ -17,9 +17,7 @@ import filterdata
 import recommendation
 
 from filterdata import recommendation
-from recommendation import moisturizerRecom
-from recommendation import cleanserRecom
-from recommendation import sunscreenRecom
+from filterdata import checkExisting
 
 ctk.set_appearance_mode("light")
 
@@ -299,18 +297,29 @@ def fill_skincare_table():
     for item in skincare_table.get_children():
         skincare_table.delete(item)
 
+    #recommendations
+    moisturizer, cleanser, sunscreen = None, None, None
+    
+    if not cleanser:
+        cleanser = recommendation("Cleanser", opt_skin_type, opt_allergies_list, opt_acne)
+
+    if not moisturizer:
+        moisturizer = recommendation("Moisturizer", opt_skin_type, opt_allergies_list, opt_acne)
+
+    if not sunscreen:
+        sunscreen = recommendation("Sun protect", opt_skin_type, opt_allergies_list, opt_acne)
+
+    tester = "test"
+
     """TO DO: insert recommended products based on user input"""
     recommended_routine = [
-        {"Brand": "Brand1", "Product": "RecoCleanser", "Link": "https://google.com"},
-        {"Brand": "Brand2", "Product": "RecoMoisturizer", "Link": "https://google.com"},
-        {"Brand": "Brand3", "Product": "RecoSunscreen", "Link": "https://google.com"}
+    {"Brand": moisturizer["Brand"], "Product": moisturizer["Product"], "Link": moisturizer["Link"]},
+    {"Brand": cleanser["Brand"], "Product": cleanser["Product"], "Link": cleanser["Link"]},
+    {"Brand": sunscreen["Brand"], "Product": sunscreen["Product"], "Link": sunscreen["Link"]}
     ]
     """TO DO: insert products to avoid based on user input"""
     #based on allergen
-    products_to_avoid = [
-        {"Brand": "Brand1", "Product": "AvoidProduct1", "Link": "https://google.com"},
-        {"Brand": "Brand2", "Product": "AvoidProduct2", "Link": "https://google.com"}
-    ]
+    
     for prod in recommended_routine:
         brand = prod["Brand"]
         product_name = prod["Product"]
@@ -321,13 +330,7 @@ def fill_skincare_table():
             skincare_table.insert("", tk.END, values=[brand, product_name, link])
 
     skincare_table.insert("", tk.END, values=["", ""], tags=("separator",))
-    for prod in products_to_avoid:
-        brand = prod["Brand"]
-        product_name = prod["Product"]
-        link = prod["Link"]
-        skincare_table.insert("", tk.END, values=[brand, product_name, link], tags=("avoid",))
-
-
+    
 result_frame = ctk.CTkFrame(app, width=900, height=700, fg_color="#FFFFF9")
 
 skincare_table = ttk.Treeview(result_frame, columns=("Brand", "Product", "Link"), show="headings", height=10)

@@ -61,7 +61,7 @@ def hasAcne(df, opt_acne):
 
 def productdf_to_list(df): #converts df to list #Note: useful since output of the filter is a df and you probably want a list
     if not df.empty:
-        return [df['Brand'].tolist()[0], df['Name'].tolist()[0], "www.google.com"]   
+        return {"Brand": df['Brand'].tolist()[0], "Product": df['Name'].tolist()[0], "Link": "www.google.com"}  
     else:
         return []
 
@@ -74,7 +74,7 @@ def recommendation(label, opt_skin_type, opt_allergies_list, opt_acne):
     allergens = allergens.sort_values(by="Rank",ascending=False)
     allergens = productdf_to_list(allergens)
 
-    print(allergens)
+    return allergens
 
 def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne): #checks if exisitng products is good for skin type. Format: ['Brand', 'Name', 'Link']
     moisturizer = pd.DataFrame()
@@ -91,7 +91,7 @@ def checkExisting(opt_skin_type, opt_products_list, opt_allergies_list, opt_acne
             case "Cleanser":
                 if product[opt_skin_type].to_string(index=False) == '1':
                     cleanser = product
-            case "sunscreen":
+            case "Sun protect":
                 if product[opt_skin_type].to_string(index=False) == '1':
                     sunscreen = product
     
